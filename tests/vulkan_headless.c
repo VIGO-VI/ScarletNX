@@ -6488,6 +6488,7 @@ static void results_copied(u64 cpu, u64 len) { vk_own_cpu_touched(cpu, len); }
 #include "vulkan_surface_loads.inc"
 #include "vulkan_rect_textures.inc"
 #include "vulkan_minmax_program.inc"
+#include "vulkan_storage_refused.inc"
 #include "vulkan_compute_depth.inc"
 #include "vulkan_owned_readback.inc"
 #include "vulkan_own_trim.inc"
@@ -7462,6 +7463,7 @@ static int run_headless(int argc, char** argv) {
     CHECK(!check_layered_surface_loads());
     CHECK(!check_rect_textures());
     CHECK(!check_minmax_program());
+    CHECK(!check_storage_image_refused());
     CHECK(!check_compute_depth_texture());
     CHECK(!check_compute_compares());
     CHECK(!check_viewport_orientation());

@@ -180,8 +180,12 @@ static int gp_on(void) {
         char say[640];
         /* log=3's counters are the same work as the setting's: the CPU's per resource, and the GPU's a pass */
         int by_log = g_settings.log_level >= 3, asked = g_settings.gpu_profile || by_log;
-        g_on = vk_gpuprof_setting(asked, by_log && !g_settings.gpu_profile ? "log=3" : "vk_gpu_profile",
-                                  g_vk.props.limits.timestampComputeAndGraphics, g_vk.has_portability,
+        char by[32];
+        if (by_log && !g_settings.gpu_profile)
+            snprintf(by, sizeof by, "log=%d", g_settings.log_level);
+        else
+            snprintf(by, sizeof by, "vk_gpu_profile=%d", g_settings.gpu_profile);
+        g_on = vk_gpuprof_setting(asked, by, g_vk.props.limits.timestampComputeAndGraphics, g_vk.has_portability,
                                   g_vk.props.deviceName, say, sizeof say);
         if (say[0]) WARN("%s\n", say);
     }

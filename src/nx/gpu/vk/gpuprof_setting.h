@@ -7,9 +7,10 @@
 #include <stddef.h>
 #include <stdio.h>
 
-/* asked: vk_gpu_profile, or log=3 in by; timestamps: the device's timestampComputeAndGraphics; portability: the device
-   is a portability driver (it lists VK_KHR_portability_subset). The value in effect, with the line to warn in say,
-   empty where the value asked for is the one in effect.
+/* asked: vk_gpu_profile, or log=3; by: the setting that asked, with its value ("vk_gpu_profile=1", "log=3");
+   timestamps: the device's timestampComputeAndGraphics; portability: the device is a portability driver (it lists
+   VK_KHR_portability_subset). The value in effect, with the line to warn in say, empty where the value asked for is
+   the one in effect.
    A portability driver runs 0: MoltenVK gives each timestamp a Metal encoder of its own that waits for the work
    before it, which ran a scene 10 times slower with two timestamps a pass, and its timestamps are unreliable on Apple
    GPUs (KhronosGroup/MoltenVK issues 1585 and 2378) */
@@ -19,14 +20,15 @@ static inline int vk_gpuprof_setting(int asked, const char* by, int timestamps, 
     if (!asked) return 0;
     if (!timestamps) {
         snprintf(say, n,
-                 "vulkan: %s asks for the GPU's time a pass, and %s has no timestamps on its graphics queue",
+                 "vulkan: %s asks for the GPU's time a pass, which runs as vk_gpu_profile=0 on %s: the device has no "
+                 "timestamps on its graphics queue",
                  by, device);
         return 0;
     }
     if (portability) {
         snprintf(say, n,
-                 "vulkan: %s asks for the GPU's time a pass, and %s is a portability driver "
-                 "(VK_KHR_portability_subset): each timestamp there takes a Metal encoder of its own, which "
+                 "vulkan: %s asks for the GPU's time a pass, which runs as vk_gpu_profile=0 on %s, a portability "
+                 "driver (VK_KHR_portability_subset): each timestamp there takes a Metal encoder of its own, which "
                  "slows a scene about 10 times, and reads unreliably (MoltenVK issues 1585 and 2378). "
                  "MTL_HUD_ENABLED=1 in the environment, or Instruments' Metal System Trace, shows the GPU's "
                  "time there",

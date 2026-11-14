@@ -389,6 +389,7 @@ The unattended runs' settings ([Run / diagnose](../dev/development.md#run--diagn
 | `ctr_separate_windows` | `0` | `1` gives the top and bottom screens a window each, each screen filling its own, instead of the top screen above the bottom one in one window |
 | `ctr_top_resolution` | `1` | The scale of the top screen's 3D rendering, 1 to 16: `1` is the console's 400x240, `2` 800x480; the screen is scaled to its window |
 | `ctr_bottom_resolution` | `1` | The same for the bottom screen: `1` is the console's 320x240, `2` 640x480 |
+| `ctr_screen_stretch` | `0` | The percent, 0 to 15, the two screens may stretch beyond their shape to fill the window, both by the same amount: `0` keeps the console's shape, `15` uses more of a tall phone's screen at a slight stretch |
 
 ## Vita driver
 
